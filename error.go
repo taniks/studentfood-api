@@ -1,7 +1,5 @@
 // Error handling system
 
-package main
-
 // Custom error type to return correct JSON
 package main
 

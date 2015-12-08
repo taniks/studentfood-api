@@ -1,20 +1,20 @@
 // Functions for importing data from database (WIP)
 
 package main
-
+/*
 import (
     "database/sql"
-    _ "github.com/go-sql-driver/mysql"
+    _ "github.com/mattn/go-sqlite3"
 )
 
-func getRestaurants() ([]*Restaurant, error) {
-	con, err := sql.Open("mymysql", database+"/"+user+"/"+password)
+func getRestaurantsFromDb() error {
+	con, err := sql.Open("sqlite3", './studentfood.db')
 	if isErr(err) { return nil, err }
 
 	// Close connection when value is returned
 	defer con.Close()
 
-	rows, err := con.Query("SELECT name, location, website, image FROM restaurant WHERE p1=? and p2=?", p1, p2)
+	rows, err := con.Query("SELECT name, location, website, image FROM restaurant")
 	if isErr(err) { return nil, err }
 
 	// Define variables here
@@ -58,3 +58,4 @@ func foodFromDB() ([]*Restaurant, error) {
 
 	return restaurants, nil
 }
+*/
