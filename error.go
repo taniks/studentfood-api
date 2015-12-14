@@ -5,32 +5,34 @@ package main
 
 import (
 	"encoding/xml"
-	"fmt"
+    "encoding/json"
 )
 
-const (
-	// Error codes
-	ErrCodeNotExist      = 1
-	ErrCodeAlreadyExists = 2
-)
-
-// The serializable Error structure.
-type Error struct {
-	XMLName xml.Name `json:"-" xml:"error"`
-	Code    int      `json:"code" xml:"code,attr"`
-	Message string   `json:"message" xml:"message"`
-}
-
-func (e *Error) Error() string {
-	return fmt.Sprintf("[%d] %s", e.Code, e.Message)
-}
-
-// NewError creates an error instance with the specified code and message.
-func NewError(code int, msg string) *Error {
-	return &Error{
-		Code:    code,
-		Message: msg,
+type (
+	// Error struct to return message in xml or json
+	Error struct {
+		XMLName xml.Name `json:"-" xml:"error"`
+		Message     string `json:"message" xml:"message"`
 	}
+)
+
+func handleError(message string, isXML bool) string {
+
+	if isXML {	
+		// Decode it error to xml
+		decoded, err := xml.Marshal(Error{XMLName: xml.Name{ Local: "error" }, Message: message})
+		if isErr(err) { return handleError(err.Error(), isXML) }
+		
+		// Return json
+		return string(decoded)
+	}
+	
+	// Decode it restaurants to json
+	decoded, err := json.Marshal(Error{XMLName: xml.Name{ Local: "error" }, Message: message})
+	if isErr(err) { return handleError(err.Error(), isXML) }
+	
+	// Return json
+	return string(decoded)
 }
 
 // Simple is error check

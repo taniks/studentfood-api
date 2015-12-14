@@ -8,14 +8,14 @@ import (
 
 // database
 type (
+	Restaurants struct {
+		XMLName xml.Name `json:"-" xml:"restaurants"`
+		Restaurants []Restaurant `json:"restaurants" xml:"restaurants"`
+	}
 	Restaurant struct {
 		XMLName xml.Name `json:"-" xml:"restaurant"`
 		Name     string `json:"name" xml:"name"`
-		Location string `json:"location" xml:"location"`
-		Website  string `json:"website" xml:"website"`
-		Image    string `json:"image" xml:"image"`
 		API		 string `json:"api" xml:"api"`
-		Custom   string `json:"custom" xml:"custom"`
 	}
 	Foods struct {
 		XMLName xml.Name `json:"-" xml:"foods"`

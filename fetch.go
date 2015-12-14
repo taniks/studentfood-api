@@ -4,10 +4,8 @@ import (
     "encoding/xml"
     "encoding/json"
     "net/http"
-    "time"
-    "strings"
     "io/ioutil"
-    "strconv"
+    "fmt"
 )
 
 func getJSON(url string) ([]byte, error) {
@@ -27,20 +25,16 @@ func getJSON(url string) ([]byte, error) {
 
 // Get food from sodexo restaurant
 //func getSodexo(restaurant Restaurant, useXML bool) (string, error) {
-func getSodexo(useXML bool) (string, error) {
+func getSodexo(id, day, month, year string, useXML bool) (string, error) {
     var sodexo Sodexo
     
     // Change to use URL from database!!!!!!!
-    url := "http://www.sodexo.fi/ruokalistat/output/daily_json/5859/{year}/{month}/{day}/fi"
+    url := "http://www.sodexo.fi/ruokalistat/output/daily_json/"+id+"/"+year+"/"+month+"/"+day+"/fi"
     
-    // Turn api to correct format
-    now := time.Now()
-	formatted := strings.Replace(url, "{day}", strconv.Itoa(now.Day()), 1)
-	formatted = strings.Replace(formatted, "{month}", strconv.Itoa(int(now.Month())), 1)
-	formatted = strings.Replace(formatted, "{year}", strconv.Itoa(now.Year()), 1)
+    fmt.Println(url)
     
     // Decode json to struct
-    js, err := getJSON(formatted)
+    js, err := getJSON(url)
     if isErr(err) { return "", err }
     
     // Decode json
