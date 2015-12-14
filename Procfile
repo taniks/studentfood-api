@@ -1,1 +1,1 @@
-web: website
+web: studentfood-api
